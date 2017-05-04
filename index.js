@@ -25,6 +25,7 @@ function S3StreamLogger(options){
     this.upload_every           = options.upload_every  || 20*1000;    // default to 20 seconds
     this.buffer_size            = options.buffer_size   || 10000;      // or every 10k, which ever is sooner
     this.server_side_encryption = options.server_side_encryption || false;
+    this.date_folders           = options.date_folders           || false        // automatcially nest folders in date structure {this.folder_name}/YYYY/MM/DD/{this.file_name}, defaults to false 
 
     // Backwards compatible API changes
 
@@ -124,7 +125,14 @@ S3StreamLogger.prototype._newFile = function(){
         this.file_started.getUTCSeconds(),
         this.file_started.getUTCMilliseconds()
     );
-    this.object_name  =  (this.folder === '' ? '' : this.folder + '/') + strftime(this.name_format, date_as_utc);
+    
+    if (this.date_folders) {
+      // set folder name to automatically reflect {this.folder}/YYYY/MM/DD/{this.name_format} format, 
+      // automatically organizes S3 folder structure into dated folders 
+      this.object_name  =  (this.folder === '' ? '' : this.folder + '/' + this.file_started.getFullYear() + '/' + (this.file_started.getMonth() + 1) + '/' + this.file_started.getDay() + '/') + strftime(this.name_format, date_as_utc);  
+    } else {
+      this.object_name  =  (this.folder === '' ? '' : this.folder + '/') + strftime(this.name_format, date_as_utc);
+    };
 };
 
 S3StreamLogger.prototype._write = function(chunk, encoding, cb){
