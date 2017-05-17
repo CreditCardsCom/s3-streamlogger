@@ -8,7 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/coggle/s3-streamlogger.git"
+    "url": "git://github.com/creditcardscom/s3-streamlogger.git"
+  },
+  "publishConfig": {
+    "registry": "https://packages.creditcards.com/artifactory/api/npm/npm-main"
   },
   "keywords": [
     "winston",
@@ -18,9 +21,9 @@
   "author": "James Crosby <james@coggle.it>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/coggle/s3-streamlogger/issues"
+    "url": "https://github.com/creditcardscom/s3-streamlogger/issues"
   },
-  "homepage": "https://github.com/coggle/s3-streamlogger",
+  "homepage": "https://github.com/creditcardscom/s3-streamlogger",
   "dependencies": {
     "aws-sdk": "^2.1.16",
     "git-branch": "~0.3.0",
